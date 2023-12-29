@@ -9,6 +9,9 @@ import javafx.stage.Stage;
 public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
+        if(callBack != null){
+            callBack.app = this;
+        }
         Button btOK = new Button("OK");
         Scene scene = new Scene(btOK, 200, 250);
         primaryStage.setTitle("MyJavaFX"); // Set the stage title
@@ -16,7 +19,5 @@ public class App extends Application {
         primaryStage.show(); // Display the stage
     }
 
-    public App(String... Args){
-        launch(Args);
-    }
+    public static SceneManager callBack = null;
 }

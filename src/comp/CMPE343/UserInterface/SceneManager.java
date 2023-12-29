@@ -17,7 +17,9 @@ public class SceneManager {
         if(UIThread == null){
             try{
                 UIThread = new Thread(() -> {
+                    log("UI Thread Begun.");
                     instance = new SceneManager(args);
+                    log("UI Thread Ended.");
                 });
                 UIThread.run();
             }catch (Exception e){
@@ -31,7 +33,6 @@ public class SceneManager {
             try {
                 instance.app.stop();
                 UIThread.interrupt();
-
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -46,7 +47,8 @@ public class SceneManager {
 
 
     private SceneManager(String... args){
-        app = new App(args);
+        App.callBack = this;
+        Application.launch(App.class, args);
     }
 
 }
