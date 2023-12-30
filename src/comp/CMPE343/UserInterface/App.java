@@ -25,10 +25,22 @@ public class App extends Application {
             // Happens when button is pressed.
             if(event.getEventType().getName() == "ACTION"){
                 debugLog("Scene:Login:Buttons", "Login Button pressed. Checking database.");
+                loginScene.getLoginButton().setDisable(true);
                 switch (loginScene.checkDatabase()){
                     case -1:
                         debugLog("Scene:Login", "Login Failed.");
                         loginScene.getPassword().setText("");
+                        loginScene.getLoadingText().setText("\tLogin Failed...");
+                        loginScene.getLoadingText().setStyle("-fx-text-fill: red");
+                        new Thread(() ->{
+                            try {
+                                Thread.sleep(500);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+                            loginScene.getLoginButton().setDisable(false);
+                        }).start();
+
                 }
             }
         });
