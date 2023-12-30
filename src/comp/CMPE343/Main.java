@@ -9,15 +9,11 @@ public class Main {
 
 
     public static void main(String[] args){
-        log("Main Thread Started.");
+        log("Thread Started.");
 
         SceneManager.startUI(args);
 
-        for (int i = 0; i < 19; i++) {
-            log("Test %d", i);
-        }
-
-        log("Main Thread Ended.");
+        log("Thread Ended.");
 
     }
 }

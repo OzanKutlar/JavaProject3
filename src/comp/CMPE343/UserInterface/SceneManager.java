@@ -21,7 +21,9 @@ public class SceneManager {
                     instance = new SceneManager(args);
                     log("UI Thread Ended.");
                 });
-                UIThread.run();
+                UIThread.setName("UserInterface");
+                log("Starting UI Thread");
+                UIThread.start();
             }catch (Exception e){
                 debugLog("Scene:Exception", "An exception occured, with the message : %d\nWith the stack trace %d", e.getMessage(), e.getStackTrace());
             }
