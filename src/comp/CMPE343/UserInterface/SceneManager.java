@@ -17,9 +17,13 @@ public class SceneManager {
         if(UIThread == null){
             try{
                 UIThread = new Thread(() -> {
+                    log("UI Thread Begun.");
                     instance = new SceneManager(args);
+                    log("UI Thread Ended.");
                 });
-                UIThread.run();
+                UIThread.setName("UserInterface");
+                log("Starting UI Thread");
+                UIThread.start();
             }catch (Exception e){
                 debugLog("Scene:Exception", "An exception occured, with the message : %d\nWith the stack trace %d", e.getMessage(), e.getStackTrace());
             }
@@ -31,7 +35,6 @@ public class SceneManager {
             try {
                 instance.app.stop();
                 UIThread.interrupt();
-
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -46,7 +49,8 @@ public class SceneManager {
 
 
     private SceneManager(String... args){
-        app = new App(args);
+        App.callBack = this;
+        Application.launch(App.class, args);
     }
 
 }

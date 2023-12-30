@@ -6,7 +6,7 @@ public class Logger {
 
 
     public static void log(String s, Object... objects){
-        logPrefixed("[LOG] : ", s, objects);
+        logPrefixed("[" + Thread.currentThread().getName() + "] : ", s, objects);
     }
 
     private static void logPrefixed(String prefix, String s, Object... objects){
