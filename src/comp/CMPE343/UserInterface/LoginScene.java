@@ -79,9 +79,15 @@ public class LoginScene {
     public int callBackData = -2;
 
     public int checkDatabase(){
+        callBackData = -2;
 
-        return -1;
+
+
+
+        return callBackData;
     }
+
+
 
     public Scene getScene() {
         return scene;

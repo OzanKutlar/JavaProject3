@@ -10,8 +10,12 @@ public class Main {
 
     public static void main(String[] args){
         log("Thread Started.");
+        log("Checking Database");
 
-        SceneManager.startUI(args);
+
+        log("Database State : %d", DatabaseConnector.checkDatabaseExists());
+
+//        SceneManager.startUI(args);
 
         log("Thread Ended.");
 

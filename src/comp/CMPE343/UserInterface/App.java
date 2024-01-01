@@ -32,15 +32,6 @@ public class App extends Application {
                         loginScene.getPassword().setText("");
                         loginScene.getLoadingText().setText("\tLogin Failed...");
                         loginScene.getLoadingText().setStyle("-fx-text-fill: red");
-                        new Thread(() ->{
-                            try {
-                                Thread.sleep(500);
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
-                            }
-                            loginScene.getLoginButton().setDisable(false);
-                        }).start();
-
                 }
             }
         });
