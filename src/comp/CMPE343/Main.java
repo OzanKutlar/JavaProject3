@@ -11,12 +11,13 @@ public class Main {
     public static void main(String[] args){
         log("Thread Started.");
         log("Checking Database");
+        boolean dbState = DatabaseConnector.checkDatabaseExists();
+        log("Database State : %d", dbState);
+        if(dbState){
+            DatabaseConnector.startDatabaseConnector();
+        }
 
-
-        log("Database State : %d", DatabaseConnector.checkDatabaseExists());
-
-//        SceneManager.startUI(args);
-
+        SceneManager.startUI(args);
         log("Thread Ended.");
 
     }

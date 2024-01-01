@@ -2,7 +2,7 @@ package comp.CMPE343;
 
 public class Logger {
 
-    public static String DEBUG = "Scene";
+    public static String DEBUG = "Scene,Database";
 
 
     public static void log(String s, Object... objects){
