@@ -3,6 +3,9 @@ package comp.CMPE343;
 import comp.CMPE343.Database.DatabaseConnector;
 import comp.CMPE343.UserInterface.SceneManager;
 
+import java.sql.ResultSet;
+import java.util.UUID;
+
 import static comp.CMPE343.Logger.*;
 
 public class Main {
@@ -17,7 +20,39 @@ public class Main {
             DatabaseConnector.startDatabaseConnector();
         }
 
-        SceneManager.startUI(args);
+        log("Testing DB from main thread");
+        while (DatabaseConnector.instance == null){
+            try {
+                Thread.sleep(50);
+                log("Waiting");
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        UUID savedID = DatabaseConnector.instance.sendRequest("SELECT productID, stockLeft, discountRemove FROM stock");
+
+        ResultSet resultSet = null;
+        while (resultSet == null){
+            try {
+                resultSet = DatabaseConnector.instance.checkResult(savedID);
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        log("Results are : ");
+        try{
+            while (resultSet.next()){
+                log("Product ID : %d\nStock Left : %d\nRemove Discount At : %d", resultSet.getInt("productID"), resultSet.getInt("stockLeft"), resultSet.getInt("discountRemove"));
+            }
+            resultSet.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+
+
+//        SceneManager.startUI(args);
         log("Thread Ended.");
 
     }
