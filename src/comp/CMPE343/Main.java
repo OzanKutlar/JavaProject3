@@ -19,7 +19,6 @@ public class Main {
         if(dbState){
             DatabaseConnector.startDatabaseConnector();
         }
-
         log("Testing DB from main thread");
         while (DatabaseConnector.instance == null){
             try {
@@ -52,7 +51,7 @@ public class Main {
         }
 
 
-//        SceneManager.startUI(args);
+        SceneManager.startUI(args);
         log("Thread Ended.");
 
     }

@@ -1,0 +1,22 @@
+- Admin paneli (Product ekleme vs stock değiştirme) (Melih)
+    -Stock değiştirme paneli
+    -Order listesi görüntüleme
+
+- User paneli (Product satın alma, sepete ekleme vs) (Ozan + Melih)
+    -Product listesi
+    -Product detayları
+    -Sepet
+    -Satın alma ekranı
+    -Kendi orderının durumunu görme
+
+- Driver paneli (Order kabul etme, Order complete etme) (Mert + Serkan)
+    -Alınmamış bütün orderların listesi
+    -Order kabul etme
+    -Şuan kendi üzerinde olan orderlar listesi
+    -Order bitirmek için confirmation
+
+- Register ekranı (Serkan)
+    -Username
+    -Password
+    -Adres
+    -Aranması gereken telefon numarası
