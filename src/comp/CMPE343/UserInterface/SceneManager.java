@@ -2,10 +2,9 @@ package comp.CMPE343.UserInterface;
 
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import static comp.CMPE343.Logger.*;
+
+import static comp.CMPE343.Logger.debugLog;
+import static comp.CMPE343.Logger.log;
 
 
 

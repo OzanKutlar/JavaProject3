@@ -1,16 +1,14 @@
 package comp.CMPE343.Database;
 
 import javax.sql.rowset.CachedRowSet;
-import javax.sql.rowset.RowSetFactory;
 import javax.sql.rowset.RowSetProvider;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Objects;
 import java.util.UUID;
-import java.util.concurrent.LinkedBlockingDeque;
 
-import static comp.CMPE343.Logger.*;
+import static comp.CMPE343.Logger.debugLog;
+import static comp.CMPE343.Logger.log;
 public class DatabaseConnector {
 
 
@@ -72,7 +70,7 @@ public class DatabaseConnector {
         }
     }
 
-    private Connection connection;
+    public Connection connection;
 
 
 
