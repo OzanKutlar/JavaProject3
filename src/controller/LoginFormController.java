@@ -78,6 +78,6 @@ public class LoginFormController {
 
         primaryStage.centerOnScreen();
 
-    //a
+
     }
 }
