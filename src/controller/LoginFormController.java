@@ -1,6 +1,7 @@
 package controller;
 
 import comp.CMPE343.Database.DatabaseConnector;
+import comp.CMPE343.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,6 +21,16 @@ public class LoginFormController {
     public TextField txtUserName;
     public PasswordField txtPassword;
     public AnchorPane root;
+
+    public LoginFormController(){
+        try{
+            Logger.log("Found resource : %d", this.getClass().getResource("view/loginform.fxml"));
+            root = FXMLLoader.load(this.getClass().getResource("loginform.fxml"));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
 
 
     public void btnSignIn(ActionEvent actionEvent) {

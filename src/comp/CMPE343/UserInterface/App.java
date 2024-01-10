@@ -1,5 +1,6 @@
 package comp.CMPE343.UserInterface;
 
+import controller.LoginFormController;
 import javafx.application.Application;
 import javafx.event.Event;
 import javafx.scene.Parent;
@@ -32,9 +33,14 @@ public class App extends Application {
                         loginScene.getPassword().setText("");
                         loginScene.getLoadingText().setText("\tLogin Failed...");
                         loginScene.getLoadingText().setStyle("-fx-text-fill: red");
+                    case 0:
+
                 }
             }
         });
+
+//        LoginFormController login = new LoginFormController();
+//        Scene sceneTest = new Scene(login.root);
 
 
         // Sample code taken from teacher's presentation.
