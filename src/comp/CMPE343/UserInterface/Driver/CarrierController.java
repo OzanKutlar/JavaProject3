@@ -1,6 +1,10 @@
 package comp.CMPE343.UserInterface.Driver;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import comp.CMPE343.Database.DatabaseConnector;
 import javafx.fxml.FXML;
@@ -18,7 +22,7 @@ public class CarrierController {
     private ListView<Order> completedOrdersListView;
 
     public CarrierController() {
-        this.databaseAdapter = new DatabaseConnector();
+        this.databaseAdapter = DatabaseConnector.instance;
     }
 
     @FXML
@@ -26,9 +30,44 @@ public class CarrierController {
         loadAvailableOrders();
     }
 
+    private List<Order> getAvailableOrders(){
+        UUID requestID = databaseAdapter.sendRequest("SELECT * FROM orders;");
+
+        List<Order> orders = new ArrayList<>();
+        // Waiting for a response for only 5 seconds.
+        for (int i = 0; i < 20; i++) {
+            ResultSet result = databaseAdapter.checkResult(requestID);
+            if(result != null){
+                try{
+                    while (result.next()){
+                        Order o = new Order();
+                        o.id = result.getInt("id");
+                        o.adres = result.getString("adres");
+                        o.customerName = result.getString("customer");
+                        o.total = result.getFloat("price");
+                        o.toBeDelivered = result.getDate("time");
+                        orders.add(o);
+                    }
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                }
+                break;
+            }
+            try{
+                Thread.sleep(250);
+            }
+            catch(Exception e){
+            }
+        }
+
+
+        return orders;
+    }
+
     private void loadAvailableOrders() {
         // Retrieve available orders from the database
-        List<Order> availableOrders = databaseAdapter.getAvailableOrders();
+        List<Order> availableOrders = getAvailableOrders();
         availableOrdersListView.getItems().addAll(availableOrders);
     }
 
@@ -42,6 +81,10 @@ public class CarrierController {
         }
     }
 
+    private void completeOrder(Order completedOrder){
+        databaseAdapter.sendRequest("UPDATE orders SET completed = true, completionTime = CURRENT_TIMESTAMP WHERE id = " + completedOrder.id + ";");
+    }
+
     @FXML
     private void deliverOrder() {
         // Move completed orders from selected to completed
@@ -50,9 +93,7 @@ public class CarrierController {
             selectedOrdersListView.getItems().remove(completedOrder);
             completedOrdersListView.getItems().add(completedOrder);
 
-            // Set delivery date and update database
-            completedOrder.setDeliveryDate(LocalDateTime.now());
-            databaseAdapter.completeOrder(completedOrder);
+            completeOrder(completedOrder);
         }
     }
 }

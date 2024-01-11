@@ -71,13 +71,13 @@ public class LoginScene {
     }
 
 
+    public int callBackData = -2;
+
+
     /**
      * Takes in no arguments as it is an inner function that can access the username and password fields by itself.
      * @return -1 for not found, 0 for admin, 1 for user, 2 for driver.
      */
-
-    public int callBackData = -2;
-
     public int checkDatabase(){
         callBackData = -2;
 

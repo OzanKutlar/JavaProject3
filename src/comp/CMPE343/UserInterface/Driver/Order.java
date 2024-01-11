@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public class Order {
 
-    UUID id;
+    int id;
     String adres;
     String customerName;
 

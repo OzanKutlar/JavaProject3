@@ -4,10 +4,20 @@ import java.util.UUID;
 
 public class Product {
 
-    int id;
+    public int id;
 
-    String productName;
-    float stock;
-    float price;
-    float markupNumber;
+    public String productName;
+    public float stock;
+    public double price;
+    public double markupNumber;
+
+    public Product(){
+
+    }
+
+    public Product(String name, double price, double markup) {
+        this.productName = name;
+        this.price = price;
+        this.markupNumber = markup;
+    }
 }

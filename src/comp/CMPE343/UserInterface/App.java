@@ -1,5 +1,8 @@
 package comp.CMPE343.UserInterface;
 
+import comp.CMPE343.UserInterface.Buyer.Product;
+import comp.CMPE343.UserInterface.Buyer.ProductPage;
+import comp.CMPE343.UserInterface.Buyer.ProductPane;
 import controller.LoginFormController;
 import javafx.application.Application;
 import javafx.event.Event;
@@ -39,10 +42,11 @@ public class App extends Application {
             }
         });
 
+        Scene testScene = new ProductPage().scene;
 
         // Sample code taken from teacher's presentation.
         primaryStage.setTitle("Group19 GreenGrocer"); // Set the stage title
-        primaryStage.setScene (LoginFormController.getScene()); // Place the scene in the stage
+        primaryStage.setScene (testScene); // Place the scene in the stage
         primaryStage.show(); // Display the stage
 
 
