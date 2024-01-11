@@ -4,21 +4,20 @@ import comp.CMPE343.UserInterface.Buyer.Product;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.UUID;
 
 public class Order {
 
-    int id;
-    String adres;
-    String customerName;
+    public int id;
+    public String adres;
+    public String customerName;
 
     // Teslimatın ürünleri
-    ArrayList<Product> products;
+    public ArrayList<Product> products;
 
     // Teslimatın total fiyatı
-    float total;
+    public float total;
 
     // Ne zaman getirilcek bu teslimat?
-    Date toBeDelivered;
+    public Date toBeDelivered;
 
 }
