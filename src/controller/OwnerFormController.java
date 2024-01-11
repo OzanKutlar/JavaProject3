@@ -11,12 +11,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class LoginFormController {
+public class OwnerFormController {
     public TextField txtUserName;
     public PasswordField txtPassword;
     public AnchorPane root;
@@ -24,7 +23,7 @@ public class LoginFormController {
 
     public static Scene getScene() {
         try{
-            Parent parent = FXMLLoader.load(LoginFormController.class.getResource("../view/loginform.fxml"));
+            Parent parent = FXMLLoader.load(LoginFormController.class.getResource("../view/ownerloginform.fxml"));
             Scene scene = new Scene(parent);
             return scene;
         }
@@ -36,7 +35,7 @@ public class LoginFormController {
 
 
 
-    public void btnSignIn(ActionEvent actionEvent) {
+    public void btnOwnerLogin(ActionEvent actionEvent) {
 
         try {
             String Username =  txtUserName.getText();
@@ -76,53 +75,6 @@ public class LoginFormController {
         {
             ex.printStackTrace();
         }
-
-    }
-
-    public void btnSignup(ActionEvent actionEvent) throws IOException {
-
-        Parent parent = FXMLLoader.load(this.getClass().getResource("../view/registrationform.fxml"));
-        Scene scene = new Scene(parent);
-
-        Stage primaryStage = (Stage) root.getScene().getWindow();
-
-        primaryStage.setScene(scene);
-
-        primaryStage.setTitle("Register Form");
-
-        primaryStage.centerOnScreen();
-
-
-    }
-    public void btnOwnerLogin(ActionEvent actionEvent) throws IOException {
-
-        Parent parent = FXMLLoader.load(this.getClass().getResource("../view/ownerloginform.fxml"));
-        Scene scene = new Scene(parent);
-
-        Stage primaryStage = (Stage) root.getScene().getWindow();
-
-        primaryStage.setScene(scene);
-
-        primaryStage.setTitle("Owner Form");
-
-        primaryStage.centerOnScreen();
-
-
-    }
-
-    public void btnCarrierLogin(ActionEvent actionEvent) throws IOException {
-
-        Parent parent = FXMLLoader.load(this.getClass().getResource("../view/carrierloginform.fxml"));
-        Scene scene = new Scene(parent);
-
-        Stage primaryStage = (Stage) root.getScene().getWindow();
-
-        primaryStage.setScene(scene);
-
-        primaryStage.setTitle("Carrier Form");
-
-        primaryStage.centerOnScreen();
-
 
     }
 }

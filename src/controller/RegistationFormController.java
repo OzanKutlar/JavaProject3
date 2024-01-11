@@ -25,6 +25,8 @@ public class RegistationFormController  {
     public Label lblpassword1;
     public Label lblpassword2;
     public Label lblAutoID;
+    public TextField txtmail;
+    public TextField txtaddress;
 
 
     public void initialize() {
@@ -121,6 +123,8 @@ public class RegistationFormController  {
                 String id = lblAutoID.getText();
 
                 String name = txtfullName.getText();
+                String mail = txtmail.getText();
+                String address = txtaddress.getText();
 
                 String mobile = txtMobile.getText();
                 String cpass = txtConfirmPassword.getText();
