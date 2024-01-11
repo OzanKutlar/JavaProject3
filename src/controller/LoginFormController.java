@@ -22,12 +22,15 @@ public class LoginFormController {
     public PasswordField txtPassword;
     public AnchorPane root;
 
-    public LoginFormController(){
+    public static Scene getScene() {
         try{
-            Logger.log("Found resource : %d", this.getClass().getResource("view/loginform.fxml"));
-            root = FXMLLoader.load(this.getClass().getResource("loginform.fxml"));
-        }catch (Exception e){
+            Parent parent = FXMLLoader.load(LoginFormController.class.getResource("../view/loginform.fxml"));
+            Scene scene = new Scene(parent);
+            return scene;
+        }
+        catch(Exception e){
             e.printStackTrace();
+            return null;
         }
     }
 

@@ -39,13 +39,10 @@ public class App extends Application {
             }
         });
 
-//        LoginFormController login = new LoginFormController();
-//        Scene sceneTest = new Scene(login.root);
-
 
         // Sample code taken from teacher's presentation.
         primaryStage.setTitle("Group19 GreenGrocer"); // Set the stage title
-        primaryStage.setScene (loginScene.getScene()); // Place the scene in the stage
+        primaryStage.setScene (LoginFormController.getScene()); // Place the scene in the stage
         primaryStage.show(); // Display the stage
 
 
