@@ -20,7 +20,7 @@
                 </PasswordField>
                 <Label layoutX="45.0" layoutY="28.0" text="Login" textFill="#10aed3">
                     <font>
-                        <Font name="System Bold" size="23.0" />
+                        <Font name="System Bold" size="35.0" />
                     </font>
                 </Label>
                 <Separator layoutX="45.0" layoutY="73.0" prefHeight="7.0" prefWidth="301.0" />
@@ -41,4 +41,3 @@
         </AnchorPane>
     </children>
 </AnchorPane>
-
