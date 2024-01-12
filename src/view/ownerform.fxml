@@ -1,17 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.OwnerController"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="400.0" prefWidth="603.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="comp.CMPE343.UserInterface.Driver.OwnerController">
 
     <VBox layoutX="14.0" layoutY="14.0" prefHeight="372.0" prefWidth="572.0" spacing="10.0">
         <Label text="Products" />
@@ -20,24 +12,20 @@
             <TextField fx:id="productNameTextField" promptText="Name" />
             <TextField fx:id="productPriceTextField" promptText="Price" />
             <TextField fx:id="productThresholdTextField" promptText="Threshold" />
-            <Button text="Add" onAction="#addProduct" />
-            <Button text="Remove" onAction="#removeProduct" />
-            <Button text="Update" onAction="#updateProduct" />
+            <Button onAction="#addProduct" prefHeight="26.0" prefWidth="78.0" text="Add" />
+            <Button onAction="#removeProduct" prefHeight="26.0" prefWidth="94.0" text="Remove" />
+            <Button onAction="#updateProduct" prefHeight="26.0" prefWidth="99.0" text="Update" />
         </HBox>
         <Label text="Carriers" />
         <ListView fx:id="carriersListView" prefHeight="100.0" prefWidth="200.0" />
         <HBox spacing="10.0">
             <TextField fx:id="carrierNameTextField" promptText="Name" />
             <TextField fx:id="carrierAddressTextField" promptText="Address" />
-            <Button text="Employ" onAction="#employCarrier" />
-            <Button text="Fire" onAction="#fireCarrier" />
+            <Button onAction="#employCarrier" text="Employ" />
+            <Button onAction="#fireCarrier" text="Fire" />
         </HBox>
         <Label text="Orders" />
-        <ListView fx:id="ordersListView" prefHeight="100.0" prefWidth="200.0" />
-    </VBox>
-
-    <VBox layoutX="400.0" layoutY="14.0" prefHeight="372.0" prefWidth="186.0" spacing="10.0">
-        <Label text="Report" />
+        <ListView fx:id="ordersListView" prefHeight="100.0" prefWidth="572.0" />
     </VBox>
 
 </AnchorPane>

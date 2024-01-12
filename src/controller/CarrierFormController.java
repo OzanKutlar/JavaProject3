@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -75,6 +76,19 @@ public class CarrierFormController {
         {
             ex.printStackTrace();
         }
+
+    }
+    public void btnloginform(ActionEvent actionEvent) throws IOException {
+
+        Parent parent = FXMLLoader.load(this.getClass().getResource("../view/loginform.fxml"));
+        Scene scene = new Scene(parent);
+
+        Stage primaryStage = (Stage) root.getScene().getWindow();
+
+        primaryStage.setScene(scene);
+
+        primaryStage.centerOnScreen();
+
 
     }
 }

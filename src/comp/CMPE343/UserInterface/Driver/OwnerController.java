@@ -1,9 +1,8 @@
-package controller;
+package comp.CMPE343.UserInterface.Driver;
 
 import comp.CMPE343.Database.DatabaseConnector;
 import comp.CMPE343.UserInterface.Buyer.Carrier;
 import comp.CMPE343.UserInterface.Buyer.Product;
-import comp.CMPE343.UserInterface.Driver.Order;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
