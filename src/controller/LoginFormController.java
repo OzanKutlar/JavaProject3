@@ -83,8 +83,7 @@ public class LoginFormController {
 
     public void btnSignup(ActionEvent actionEvent) throws IOException {
 
-        Parent parent = FXMLLoader.load(this.getClass().getResource("../view/registrationform.fxml"));
-        Scene scene = new Scene(parent);
+        Scene scene = RegistationFormController.getScene();
 
         Stage primaryStage = (Stage) root.getScene().getWindow();
 

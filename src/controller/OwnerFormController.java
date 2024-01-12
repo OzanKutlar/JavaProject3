@@ -82,7 +82,7 @@ public class OwnerFormController {
         Parent parent = FXMLLoader.load(this.getClass().getResource("../view/loginform.fxml"));
         Scene scene = new Scene(parent);
 
-        Stage primaryStage = (Stage) root.getScene().getWindow();
+        Stage primaryStage = (Stage) txtUserName.getScene().getWindow();
 
         primaryStage.setScene(scene);
 

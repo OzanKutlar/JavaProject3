@@ -51,6 +51,9 @@ public class Order {
     // Ne zaman getirilcek bu teslimat?
     public Date toBeDelivered;
 
+    // Sürücü aldı mı bunu?
+    public boolean taken;
+
 
     @Override
     public String toString() {

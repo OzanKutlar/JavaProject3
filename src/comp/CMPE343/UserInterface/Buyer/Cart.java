@@ -32,6 +32,8 @@ public class Cart {
     String adress;
     String Username;
 
+    double total;
+
 
     public Cart(ArrayList<Product> sepet, ProductPage parent){
         this.sepet = sepet;
@@ -42,7 +44,7 @@ public class Cart {
 //        grid.setPadding(new Insets(25,25,25,25));
         grid.setAlignment(Pos.CENTER);
 
-        UUID id = DatabaseConnector.instance.sendRequest("SELECT * FROM users where id="+ Main.userID + ";");
+        UUID id = DatabaseConnector.instance.sendRequest("SELECT * FROM user where id="+ Main.userID + ";");
 
         ResultSet resultSet = null;
         for (int i = 0; i < 20; i++) {
@@ -58,7 +60,9 @@ public class Cart {
         }
 
         try{
-
+            resultSet.next();
+            adress = resultSet.getString("address");
+            Username = resultSet.getString("username");
         }
         catch(Exception e){
             e.printStackTrace();
@@ -74,10 +78,12 @@ public class Cart {
 
         // User Data
         Button logOutButton = new Button("Back to Main Page");
+        logOutButton.setStyle("-fx-alignment: center; -fx-background-color: #3498db; -fx-font-size: 14px; -fx-font-weight: bold;");
         GridPane.setConstraints(logOutButton, 2, 0);
 
 
         Button finishPurchaseButton = new Button("Finish Purchase");
+        finishPurchaseButton.setStyle("-fx-alignment: center; -fx-background-color: #3498db; -fx-font-size: 14px; -fx-font-weight: bold;");
         GridPane.setConstraints(finishPurchaseButton, 2, 4);
 
         logOutButton.setOnAction(e ->{
@@ -86,7 +92,13 @@ public class Cart {
 
         finishPurchaseButton.setOnAction(e ->{
 
-            DatabaseConnector.instance.sendRequest("INSERT INTO orders (address, customerName, orderItems, total, toBeDelivered) VALUES ('New Address', 'New Customer', 'New Item', 10.99, NOW());");
+            String itemStr = sepet.get(0).id + ":" + sepet.get(0).stock;;
+            for (int i = 1; i < sepet.size(); i++) {
+                Product p = sepet.get(i);
+                itemStr += "," + p.id + ":" + p.stock;
+            }
+
+            DatabaseConnector.instance.sendRequest("INSERT INTO orders (address, customerName, orderItems, total, toBeDelivered) VALUES ('" + adress + "', '" + Username + "', '" + itemStr + "', " + total + ", NOW());");
 
             for (Product p : sepet){
                 DatabaseConnector.instance.sendRequest("UPDATE stock SET stock = stock - " + p.stock + " WHERE id = " + p.id + ";");
@@ -104,7 +116,8 @@ public class Cart {
 
         // Products Columnu
         Label productsText = new Label("Select a product!");
-        grid.setConstraints(productsText, 1, 0);
+        productsText.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-alignment: center;");
+        grid.setConstraints(productsText, 0, 0);
         grid.getChildren().add(productsText);
 
         try{

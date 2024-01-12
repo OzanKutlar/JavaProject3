@@ -29,6 +29,18 @@ public class RegistationFormController  {
     public TextField txtaddress;
     public AnchorPane root;
 
+    public static Scene getScene() {
+        try{
+            Parent parent = FXMLLoader.load(RegistationFormController.class.getResource("../view/registrationform.fxml"));
+            Scene scene = new Scene(parent);
+            return scene;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
     public void initialize() {
         lblpassword1.setVisible(false);
@@ -185,7 +197,7 @@ public class RegistationFormController  {
         Parent parent = FXMLLoader.load(this.getClass().getResource("../view/loginform.fxml"));
         Scene scene = new Scene(parent);
 
-        Stage primaryStage = (Stage) root.getScene().getWindow();
+        Stage primaryStage = (Stage) txtfullName.getScene().getWindow();
 
         primaryStage.setScene(scene);
 

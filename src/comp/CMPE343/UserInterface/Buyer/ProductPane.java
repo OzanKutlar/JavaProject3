@@ -133,6 +133,7 @@ public class ProductPane extends Region {
         });
 
         Button button = new Button("Lower the KG");
+        button.setStyle("-fx-alignment: center; -fx-background-color: #3498db; -fx-font-size: 14px; -fx-font-weight: bold;");
         button.setOnAction(e -> {
             // Add your confirmation logic here
             Logger.log("Confirmed: %d", slider.getValue());
@@ -157,6 +158,7 @@ public class ProductPane extends Region {
         grid.getChildren().addAll(text, slider, textField, button);
         Scene scene = new Scene(grid, 300, 200);
         popUp.setScene(scene);
+        popUp.setTitle("Change Item Count");
 
         popUp.show();
     }
@@ -169,6 +171,7 @@ public class ProductPane extends Region {
         Text text = new Text("Item : " + product.productName + "\nAre you sure you want to remove this item from your cart?");
 
         Button button = new Button("Yes");
+        button.setStyle("-fx-alignment: center; -fx-background-color: #3498db; -fx-font-size: 14px; -fx-font-weight: bold;");
         button.setOnAction(e -> {
             Logger.log("Confirmed: Removing %d from sepet", product.productName);
             parent.removeFromSepet(product);
@@ -185,8 +188,8 @@ public class ProductPane extends Region {
         grid.getChildren().addAll(text, button);
         Scene scene = new Scene(grid, 350, 200);
         popUp.setScene(scene);
+        popUp.setTitle("Remove from Cart");
 
-// Show the pop-up stage
         popUp.show();
     }
 
@@ -220,6 +223,7 @@ public class ProductPane extends Region {
         });
 
         Button button = new Button("Add to cart");
+        button.setStyle("-fx-alignment: center; -fx-background-color: #3498db; -fx-font-size: 14px; -fx-font-weight: bold;");
         button.setOnAction(e -> {
             // Add your confirmation logic here
             Logger.log("Confirmed: %d", slider.getValue());
@@ -244,6 +248,7 @@ public class ProductPane extends Region {
         grid.getChildren().addAll(text, slider, textField, button);
         Scene scene = new Scene(grid, 300, 200);
         popUp.setScene(scene);
+        popUp.setTitle("Add to cart");
 
         popUp.show();
     }
