@@ -51,4 +51,9 @@ public class Order {
     // Ne zaman getirilcek bu teslimat?
     public Date toBeDelivered;
 
+
+    @Override
+    public String toString() {
+        return "Order " + id + " : " + total + " TL, By :  " + customerName + ", to be delivered to : " + adres + " by " + toBeDelivered;
+    }
 }

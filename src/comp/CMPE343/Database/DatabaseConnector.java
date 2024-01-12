@@ -97,14 +97,19 @@ public class DatabaseConnector {
                     try {
                         Statement statement = connection.createStatement();
                         CachedRowSet returnValue = RowSetProvider.newFactory().createCachedRowSet();
-                        ResultSet resultSet = statement.executeQuery(request.request);
-                        returnValue.populate(resultSet);
-                        request.resultSet = returnValue;
-                        synchronized (results){
-                            results.add(request);
-                            results.notify();
+                        if(request.request.startsWith("SELECT")){
+                            ResultSet resultSet = statement.executeQuery(request.request);
+                            returnValue.populate(resultSet);
+                            request.resultSet = returnValue;
+                            synchronized (results){
+                                results.add(request);
+                                results.notify();
+                            }
+                            resultSet.close();
                         }
-                        resultSet.close();
+                        else{
+                            statement.execute(request.request);
+                        }
                         statement.close();
                     } catch (SQLException e) {
                         e.printStackTrace();
