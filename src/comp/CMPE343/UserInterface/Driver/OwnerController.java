@@ -71,7 +71,9 @@ public class OwnerController {
     }
 
     private void loadDrivers(){
-
+        carriersListView.getItems().removeAll(carriersListView.getItems());
+        List<Carrier> products = getAllDrivers();
+        carriersListView.getItems().addAll(products);
     }
 
     private void addProduct(Product product){
@@ -258,9 +260,14 @@ public class OwnerController {
     private void employCarrier() {
         // Employ a new carrier
         String name = carrierNameTextField.getText();
-        String address = carrierAddressTextField.getText();
-        Carrier carrier = new Carrier(name, address);
-        databaseAdapter.employCarrier(carrier);
+        String password = carrierAddressTextField.getText();
+        if(name.isEmpty() || password.isEmpty()) return;
+        Carrier carrier = new Carrier(name, password);
+        String query = "INSERT INTO user (username, password, privilege) VALUES ('%r', '%r', 'driver');";
+        query = query.replaceFirst("%r", name);
+        query = query.replaceFirst("%r", password);
+        carriersListView.getItems().add(carrier);
+        DatabaseConnector.instance.sendRequest(query);
     }
 
     @FXML
@@ -268,7 +275,7 @@ public class OwnerController {
         // Fire a carrier
         Carrier selectedCarrier = carriersListView.getSelectionModel().getSelectedItem();
         if (selectedCarrier != null) {
-            databaseAdapter.fireCarrier(selectedCarrier);
+            DatabaseConnector.instance.sendRequest("DELETE FROM user WHERE id = " + selectedCarrier.id + ";");
             carriersListView.getItems().remove(selectedCarrier);
         }
     }
@@ -341,5 +348,34 @@ public class OwnerController {
         }
 
         return products;
+    }
+    private List<Carrier> getAllDrivers(){
+        UUID requestID = databaseAdapter.sendRequest("SELECT * FROM user WHERE privilege='driver';");
+
+        List<Carrier> carriers = new ArrayList<>();
+        // Waiting for a response for only 5 seconds.
+        for (int i = 0; i < 20; i++) {
+            ResultSet result = databaseAdapter.checkResult(requestID);
+            if(result != null){
+                try{
+                    while (result.next()){
+                        Carrier c = new Carrier(result.getString("username"), result.getString("password"));
+                        c.id = result.getInt("id");
+                        carriers.add(c);
+                    }
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                }
+                break;
+            }
+            try{
+                Thread.sleep(250);
+            }
+            catch(Exception e){
+            }
+        }
+
+        return carriers;
     }
 }

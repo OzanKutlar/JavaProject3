@@ -142,48 +142,4 @@ public class DatabaseConnector {
         return true;
     }
 
-
-    public void updateProduct(Product selectedProduct, Product updatedProduct) {
-        try {
-            String query = "UPDATE products SET name = ?, price = ?, threshold = ? WHERE id = ?";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setString(1, updatedProduct.getName());
-                preparedStatement.setDouble(2, updatedProduct.getPrice());
-                preparedStatement.setDouble(3, updatedProduct.getThreshold());
-                preparedStatement.setInt(4, selectedProduct.getId()); // Assuming id is the primary key
-
-                preparedStatement.executeUpdate();
-            }
-        } catch (SQLException e) {
-            debugLog("Database", "Exception occurred while updating product");
-            e.printStackTrace();
-        }
-    }
-    public void employCarrier(Carrier carrier) {
-        try {
-            String query = "INSERT INTO carriers (name, address) VALUES (?, ?)";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setString(1, carrier.getName());
-                preparedStatement.setString(2, carrier.getAddress());
-
-                preparedStatement.executeUpdate();
-            }
-        } catch (SQLException e) {
-            debugLog("Database", "Exception occurred while employing carrier");
-            e.printStackTrace();
-        }
-    }
-    public void fireCarrier(Carrier carrier) {
-        try {
-            String query = "DELETE FROM carriers WHERE id = ?";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setInt(1, carrier.getId()); // Use the instance method on the provided Carrier
-
-                preparedStatement.executeUpdate();
-            }
-        } catch (SQLException e) {
-            debugLog("Database", "Exception occurred while firing carrier");
-            e.printStackTrace();
-        }
-    }
 }

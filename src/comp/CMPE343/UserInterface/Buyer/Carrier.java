@@ -1,26 +1,27 @@
 package comp.CMPE343.UserInterface.Buyer;
 
 public class Carrier {
-    private String name;
-    private String address;
-    public int id;
+    public String name;
+    public String password;
+    public int id = -1;
 
     public int getId() {
         return id;
     }
 
-    public Carrier(String name, String address) {
+    public Carrier(String name, String password) {
         this.name = name;
-        this.address = address;
+        this.password = password;
     }
 
-    // Getter methods
-    public String getName() {
-        return name;
-    }
 
-    public String getAddress() {
-        return address;
+    @Override
+    public String toString() {
+        if(id != -1){
+            return "Driver " + id + " : " + name + "-" + password;
+        }
+        else{
+            return "New Driver : " + name + "-" + password;
+        }
     }
-    // Additional methods and properties can be added based on your requirements
 }

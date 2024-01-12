@@ -19,7 +19,7 @@
         <ListView fx:id="carriersListView" prefHeight="100.0" prefWidth="200.0" />
         <HBox spacing="10.0">
             <TextField fx:id="carrierNameTextField" promptText="Name" />
-            <TextField fx:id="carrierAddressTextField" promptText="Address" />
+            <TextField fx:id="carrierAddressTextField" promptText="Password" />
             <Button onAction="#employCarrier" text="Employ" />
             <Button onAction="#fireCarrier" text="Fire" />
         </HBox>
