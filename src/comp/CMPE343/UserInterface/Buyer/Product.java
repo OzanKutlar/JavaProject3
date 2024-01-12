@@ -9,6 +9,8 @@ public class Product {
     public double price;
     public double markupNumber;
 
+    public String imageLoc = "../Images/default.png";
+
     public int getId() {
         return id;
     }

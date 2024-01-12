@@ -38,10 +38,15 @@ public class DatabaseConnector {
         ResultSet returnValue = null;
         debugLog("Database", "Checking Results for UUID %d", id);
         synchronized (results){
+            DatabaseRequest temprequest = null;
             for(DatabaseRequest request : results){
                 if(Objects.equals(request.requestID.toString(), id.toString())){
                     returnValue = request.resultSet;
+                    temprequest = request;
                 }
+            }
+            if(temprequest != null){
+                results.remove(temprequest);
             }
             results.notify();
         }

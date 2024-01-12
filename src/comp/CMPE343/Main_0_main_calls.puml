@@ -1,0 +1,221 @@
+@startuml
+
+/' diagram meta data start
+config=CallConfiguration;
+{
+  "rootMethod": "comp.CMPE343.Main#main(String[])",
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": true,
+    "cutInterfaceStructures": true,
+    "cutDataStructures": true,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 6,
+    "backwardDepth": 6,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showMethodParametersTypes": false,
+    "showMethodParametersNames": false,
+    "showMethodReturnType": false,
+    "showPackageLevels": 2,
+    "showCallOrder": false,
+    "edgeMode": "MethodsOnly", // TypesOnly, MethodsOnly, TypesAndMethods, MethodsAndDirectTypeUsage
+    "showDetailedClassStructure": false
+  },
+  "rootClass": "comp.CMPE343.Main",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="LR"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_1613637043 { 
+   	label=CMPE343
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_1525928083 { 
+   	label=UserInterface
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   subgraph cluster_1730757211 { 
+   	label=SceneManager
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   SceneManager1364509428XXXstartUI1814637725[
+	label="+ startUI()"
+	style=filled
+	fillcolor=white
+	tooltip="SceneManager
+
+null"
+	fontcolor=darkgreen
+];
+} 
+} 
+
+subgraph cluster_1930754934 { 
+   	label=Database
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   subgraph cluster_685857721 { 
+   	label=DatabaseConnector
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   DatabaseConnector783527819XXXcheckDatabaseExists0[
+	label="+ checkDatabaseExists()"
+	style=filled
+	fillcolor=white
+	tooltip="DatabaseConnector
+
+null"
+	fontcolor=darkgreen
+];
+
+DatabaseConnector783527819XXXstartDatabaseConnector0[
+	label="+ startDatabaseConnector()"
+	style=filled
+	fillcolor=white
+	tooltip="DatabaseConnector
+
+null"
+	fontcolor=darkgreen
+];
+
+DatabaseConnector783527819XXXstartQueue0[
+	label="+ startQueue()"
+	style=filled
+	fillcolor=white
+	tooltip="DatabaseConnector
+
+null"
+	fontcolor=darkgreen
+];
+} 
+} 
+
+subgraph cluster_653087990 { 
+   	label=Logger
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   Logger1958110676XXXdebugLog1553139675[
+	label="+ debugLog()"
+	style=filled
+	fillcolor=white
+	tooltip="Logger
+
+null"
+	fontcolor=darkgreen
+];
+
+Logger1958110676XXXlog658265366[
+	label="+ log()"
+	style=filled
+	fillcolor=white
+	tooltip="Logger
+
+null"
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_755969613 { 
+   	label=Main
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   Main1958110676XXXmain1859653459[
+	label="+ main()"
+	style=filled
+	fillcolor=white
+	tooltip="Main
+
+null"
+	penwidth=4
+	fontcolor=darkgreen
+];
+} 
+} 
+
+'edges    
+DatabaseConnector783527819XXXstartDatabaseConnector0 -> DatabaseConnector783527819XXXstartQueue0;
+DatabaseConnector783527819XXXstartDatabaseConnector0 -> Logger1958110676XXXdebugLog1553139675;
+DatabaseConnector783527819XXXstartDatabaseConnector0 -> Logger1958110676XXXlog658265366;
+DatabaseConnector783527819XXXstartQueue0 -> Logger1958110676XXXdebugLog1553139675;
+DatabaseConnector783527819XXXstartQueue0 -> Logger1958110676XXXlog658265366;
+Main1958110676XXXmain1859653459 -> DatabaseConnector783527819XXXcheckDatabaseExists0;
+Main1958110676XXXmain1859653459 -> DatabaseConnector783527819XXXstartDatabaseConnector0;
+Main1958110676XXXmain1859653459 -> Logger1958110676XXXlog658265366;
+Main1958110676XXXmain1859653459 -> SceneManager1364509428XXXstartUI1814637725;
+SceneManager1364509428XXXstartUI1814637725 -> Logger1958110676XXXdebugLog1553139675;
+SceneManager1364509428XXXstartUI1814637725 -> Logger1958110676XXXlog658265366;
+    
+}
+@enduml
