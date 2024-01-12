@@ -30,7 +30,7 @@ public class CarrierController {
     }
 
     private List<Order> getAvailableOrders(){
-        UUID requestID = databaseAdapter.sendRequest("SELECT * FROM orders;");
+        UUID requestID = databaseAdapter.sendRequest("SELECT * FROM orders WHERE taken=false;");
 
         List<Order> orders = new ArrayList<>();
         // Waiting for a response for only 5 seconds.
@@ -75,13 +75,14 @@ public class CarrierController {
         // Move selected orders from available to selected
         Order selectedOrder = availableOrdersListView.getSelectionModel().getSelectedItem();
         if (selectedOrder != null) {
+            databaseAdapter.sendRequest("UPDATE orders SET taken = 1 WHERE id = " + selectedOrder.id + ";");
             availableOrdersListView.getItems().remove(selectedOrder);
             selectedOrdersListView.getItems().add(selectedOrder);
         }
     }
 
     private void completeOrder(Order completedOrder){
-        databaseAdapter.sendRequest("UPDATE orders SET completed = true, completionTime = CURRENT_TIMESTAMP WHERE id = " + completedOrder.id + ";");
+        databaseAdapter.sendRequest("UPDATE orders SET completion_time = CURRENT_TIMESTAMP WHERE id = " + completedOrder.id + ";");
     }
 
     @FXML
