@@ -105,7 +105,7 @@ public class Cart {
             // Create radio buttons
             RadioButton option1 = new RadioButton("Today");
             RadioButton option2 = new RadioButton("Tomorrow");
-            RadioButton option3 = new RadioButton("The Day After");
+            RadioButton option3 = new RadioButton("48h later");
 
             // Set the default selection to Option 1
             option1.setSelected(true);
@@ -120,28 +120,38 @@ public class Cart {
             pressMeButton.setStyle("-fx-alignment: center; -fx-background-color: #3498db; -fx-font-size: 14px; -fx-font-weight: bold;");
 
             vbox.getChildren().addAll(welcomeText ,option1, option2, option3, pressMeButton);
+            pressMeButton.setOnAction(e2 ->{
+                RadioButton selectedRadioButton = (RadioButton) toggleGroup.getSelectedToggle();
+                String selectedOption = selectedRadioButton.getText();
+                int dayIncrease = switch (selectedOption) {
+                    case "Tomorrow" -> 1;
+                    case "The Day After" -> 2;
+                    default -> 0;
+                };
+
+                String itemStr = sepet.get(0).id + ":" + sepet.get(0).stock;;
+                for (int i = 1; i < sepet.size(); i++) {
+                    Product p = sepet.get(i);
+                    itemStr += "," + p.id + ":" + p.stock;
+                }
+
+                DatabaseConnector.instance.sendRequest("INSERT INTO orders (address, customerName, orderItems, total, toBeDelivered) VALUES ('" + adress + "', '" + Username + "', '" + itemStr + "', " + total + ", NOW()" + (dayIncrease == 0 ? ");" : " + INTERVAL " + dayIncrease + " DAY);"));
+
+                for (Product p : sepet){
+                    DatabaseConnector.instance.sendRequest("UPDATE stock SET stock = stock - " + p.stock + " WHERE id = " + p.id + ";");
+                }
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Order Successful");
+                alert.showAndWait();
+
+                ProductPage productPage = new ProductPage();
+
+                ((Stage) grid.getScene().getWindow()).setScene(productPage.scene);
+                popUp.close();
+            });
             Scene scene = new Scene(vbox, 300, 200);
             popUp.setScene(scene);
-            popUp.setTitle("Select a delivery!");
+            popUp.setTitle("Select a delivery time!");
             popUp.showAndWait();
-
-            String itemStr = sepet.get(0).id + ":" + sepet.get(0).stock;;
-            for (int i = 1; i < sepet.size(); i++) {
-                Product p = sepet.get(i);
-                itemStr += "," + p.id + ":" + p.stock;
-            }
-
-            DatabaseConnector.instance.sendRequest("INSERT INTO orders (address, customerName, orderItems, total, toBeDelivered) VALUES ('" + adress + "', '" + Username + "', '" + itemStr + "', " + total + ", NOW());");
-
-            for (Product p : sepet){
-                DatabaseConnector.instance.sendRequest("UPDATE stock SET stock = stock - " + p.stock + " WHERE id = " + p.id + ";");
-            }
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Order Successful");
-            alert.showAndWait();
-
-            ProductPage productPage = new ProductPage();
-
-            ((Stage) this.scene.getWindow()).setScene(productPage.scene);
         });
 
         grid.getChildren().addAll(logOutButton, finishPurchaseButton);
