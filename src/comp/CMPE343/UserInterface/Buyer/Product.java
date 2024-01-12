@@ -40,8 +40,13 @@ public class Product {
     public void setThreshold(double threshold) {
         this.stock = threshold;
     }
-    public Product(){
-
+    public Product(Product copy){
+        this.productName = copy.productName;
+        this.price = copy.price;
+        this.markupNumber = copy.markupNumber;
+        this.id = copy.id;
+        this.imageLoc = copy.imageLoc;
+        this.stock = copy.stock;
     }
 
     public Product(String name, double price, double markup) {

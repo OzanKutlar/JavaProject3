@@ -36,7 +36,7 @@ public class ProductPane extends Region {
     }
 
     public static ProductPane getTest(ProductPage parent){
-        Product testProduct = new Product();
+        Product testProduct = new Product("Test", 192.2, 100);
         testProduct.productName = "Test";
         testProduct.price = 192.2f;
         testProduct.stock = 100;
@@ -86,7 +86,7 @@ public class ProductPane extends Region {
         popUp.initModality(Modality.APPLICATION_MODAL);
         popUp.initOwner(this.getParent().getScene().getWindow());
 
-        Text text = new Text("Are you sure you want to remove " + product.productName + " from your cart?");
+        Text text = new Text("Item : " + product.productName + "\nAre you sure you want to remove this item from your cart?");
 
         Button button = new Button("Yes");
         button.setOnAction(e -> {
@@ -103,7 +103,7 @@ public class ProductPane extends Region {
         GridPane.setConstraints(button, 0, 2, 2, 1);
 
         grid.getChildren().addAll(text, button);
-        Scene scene = new Scene(grid, 300, 200);
+        Scene scene = new Scene(grid, 350, 200);
         popUp.setScene(scene);
 
 // Show the pop-up stage
@@ -144,7 +144,7 @@ public class ProductPane extends Region {
             // Add your confirmation logic here
             Logger.log("Confirmed: %d", slider.getValue());
             clickedBefore = true;
-            Product toSepet = product;
+            Product toSepet = new Product(product);
             toSepet.stock = slider.getValue();
             toSepet.price = slider.getValue() * product.price;
             parent.addToSepet(toSepet);

@@ -28,7 +28,7 @@ public class Main {
                 throw new RuntimeException(e);
             }
         }
-        UUID savedID = DatabaseConnector.instance.sendRequest("SELECT productID, stockLeft, discountRemove FROM stock");
+        UUID savedID = DatabaseConnector.instance.sendRequest("SELECT id, stock, markup FROM stock");
 
         ResultSet resultSet = null;
         while (resultSet == null){
@@ -42,7 +42,7 @@ public class Main {
         log("Results are : ");
         try{
             while (resultSet.next()){
-                log("Product ID : %d\nStock Left : %d\nRemove Discount At : %d", resultSet.getInt("productID"), resultSet.getInt("stockLeft"), resultSet.getInt("discountRemove"));
+                log("Product ID : %d\nStock Left : %d\nRemove Discount At : %d", resultSet.getInt("id"), resultSet.getDouble("stock"), resultSet.getDouble("markup"));
             }
             resultSet.close();
         }

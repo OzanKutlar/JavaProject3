@@ -1,5 +1,6 @@
 package comp.CMPE343.UserInterface.Buyer;
 
+import comp.CMPE343.Database.DatabaseConnector;
 import comp.CMPE343.Logger;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -12,7 +13,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class ProductPage {
 
@@ -44,14 +47,42 @@ public class ProductPage {
         Label productsText = new Label("Select a product!");
         grid.setConstraints(productsText, 1, 0);
         grid.getChildren().add(productsText);
-        for (int i = 1; i < 7; i++) {
-            ProductPane pane = ProductPane.getTest(this);
-            grid.setConstraints(pane, 1, i);
-            grid.getChildren().add(pane);
+
+        UUID id = DatabaseConnector.instance.sendRequest("SELECT * FROM stock;");
+
+        ResultSet resultSet = null;
+        for (int i = 0; i < 20; i++) {
+            try {
+                resultSet = DatabaseConnector.instance.checkResult(id);
+                if(resultSet != null){
+                    break;
+                }
+                Thread.sleep(250);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
 
+        try{
+            int counter = 1;
+            while (resultSet.next()){
+                Product p = new Product(resultSet.getString("productName"), resultSet.getDouble("price"), resultSet.getDouble("markup"));
+                p.stock = resultSet.getDouble("stock");
+                String img = resultSet.getString("image");
+                if(!img.equals("default")){
+                    p.imageLoc = img;
+                }
+                p.id = resultSet.getInt("id");
+                ProductPane pane = new ProductPane(p, this);
+                GridPane.setConstraints(pane, 1, counter++);
+                grid.getChildren().add(pane);
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
 
-        Label sepet = new Label("Sepetiniz");
+        Label sepet = new Label("Your Cart");
         grid.setConstraints(sepet, 2, 0);
         grid.getChildren().add(sepet);
 
@@ -79,18 +110,13 @@ public class ProductPage {
         }
     }
 
-    private void adjustReal(Product p, int adjust){
-
-    }
-
     public void addToSepet(Product product){
         int foundInSepet = -1;
         for (int i = 0; i < grid.getChildren().size(); i++) {
             Node node = grid.getChildren().get(i);
             if (node instanceof ProductPane && GridPane.getColumnIndex(node) == 2) {
                 ProductPane productPane = (ProductPane) node;
-                Logger.log("Checking %d against %d", productPane.getProduct().price, product.price);
-                if (productPane.getProduct().productName.equals(product.productName) && productPane.getProduct().price == product.price) {
+                if (productPane.getProduct().productName.equals(product.productName)) {
                     foundInSepet = i;
                     break;
                 }
@@ -104,11 +130,13 @@ public class ProductPage {
         }
         else{
             ProductPane oldPane = (ProductPane) grid.getChildren().get(foundInSepet);
-            double price = product.price / oldPane.getProduct().stock;
-            double newStock = oldPane.getProduct().stock + product.stock;
-            price = price * newStock;
-            product.price = price;
-            product.stock = newStock;
+            double oldPrice = oldPane.getProduct().price;
+            double oldStock = oldPane.getProduct().stock;
+            oldPane.getProduct().price += product.price;
+            oldPane.getProduct().stock += product.stock;
+            String newText = oldPane.priceLabel.getText().replace(String.format("%.1f", oldStock), String.format("%.1f", oldPane.getProduct().stock)).replace(String.format("%.1f", oldPrice), String.format("%.1f", oldPane.getProduct().price));
+
+            oldPane.priceLabel.setText(newText);
             for (int i = 0; i < sepet.size(); i++) {
                 if(sepet.get(i).productName.equals( product.productName)){
                     sepet.remove(i);
@@ -116,8 +144,6 @@ public class ProductPage {
                 }
             }
             sepet.add(product);
-            ProductPane newPane = new ProductPane(product, this, true);
-            grid.getChildren().set(foundInSepet, newPane);
         }
     }
 

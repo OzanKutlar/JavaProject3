@@ -107,6 +107,7 @@ public class DatabaseConnector {
                         resultSet.close();
                         statement.close();
                     } catch (SQLException e) {
+                        e.printStackTrace();
                         debugLog("Database", "Exception occurred in queue");
                         results.add(request);
                     }
