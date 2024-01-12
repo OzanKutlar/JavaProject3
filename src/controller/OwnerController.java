@@ -1,4 +1,4 @@
-package comp.CMPE343.UserInterface.Owner;
+package controller;
 
 import comp.CMPE343.Database.DatabaseConnector;
 import comp.CMPE343.UserInterface.Buyer.Carrier;

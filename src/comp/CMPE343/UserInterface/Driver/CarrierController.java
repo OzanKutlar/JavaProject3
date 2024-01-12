@@ -41,10 +41,10 @@ public class CarrierController {
                     while (result.next()){
                         Order o = new Order();
                         o.id = result.getInt("id");
-                        o.adres = result.getString("adres");
-                        o.customerName = result.getString("customer");
-                        o.total = result.getFloat("price");
-                        o.toBeDelivered = result.getDate("time");
+                        o.adres = result.getString("address");
+                        o.customerName = result.getString("customerName");
+                        o.total = result.getFloat("total");
+                        o.toBeDelivered = result.getDate("toBeDelivered");
                         orders.add(o);
                     }
                 }

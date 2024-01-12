@@ -42,7 +42,7 @@ public class CarrierFormController {
             String Password =  txtPassword.getText();
 
             Connection connection = DatabaseConnector.instance.connection;
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from user where username =? and password = ?");
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from user where username =? and password = ? and privilege='driver'");
             preparedStatement.setString(1,Username);
             preparedStatement.setString(2,Password);
 
@@ -51,10 +51,10 @@ public class CarrierFormController {
 
             if(resultSet.next())
             {
-                Parent parent = FXMLLoader.load(this.getClass().getResource("../view/MainForm.fxml"));
+                Parent parent = FXMLLoader.load(this.getClass().getResource("../view/carrierform.fxml"));
                 Scene scene = new Scene(parent);
 
-                Stage primarystage = (Stage) root.getScene().getWindow();
+                Stage primarystage = (Stage) txtPassword.getScene().getWindow();
 
                 primarystage.setScene(scene);
                 primarystage.setTitle("Main Form");

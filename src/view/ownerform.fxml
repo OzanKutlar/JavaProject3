@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.OwnerController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <VBox layoutX="14.0" layoutY="14.0" prefHeight="372.0" prefWidth="572.0" spacing="10.0">
+        <Label text="Products" />
+        <ListView fx:id="productsListView" prefHeight="200.0" prefWidth="200.0" />
+        <HBox spacing="10.0">
+            <TextField fx:id="productNameTextField" promptText="Name" />
+            <TextField fx:id="productPriceTextField" promptText="Price" />
+            <TextField fx:id="productThresholdTextField" promptText="Threshold" />
+            <Button text="Add" onAction="#addProduct" />
+            <Button text="Remove" onAction="#removeProduct" />
+            <Button text="Update" onAction="#updateProduct" />
+        </HBox>
+        <Label text="Carriers" />
+        <ListView fx:id="carriersListView" prefHeight="100.0" prefWidth="200.0" />
+        <HBox spacing="10.0">
+            <TextField fx:id="carrierNameTextField" promptText="Name" />
+            <TextField fx:id="carrierAddressTextField" promptText="Address" />
+            <Button text="Employ" onAction="#employCarrier" />
+            <Button text="Fire" onAction="#fireCarrier" />
+        </HBox>
+        <Label text="Orders" />
+        <ListView fx:id="ordersListView" prefHeight="100.0" prefWidth="200.0" />
+    </VBox>
+
+    <VBox layoutX="400.0" layoutY="14.0" prefHeight="372.0" prefWidth="186.0" spacing="10.0">
+        <Label text="Report" />
+    </VBox>
+
+</AnchorPane>

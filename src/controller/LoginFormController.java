@@ -1,6 +1,7 @@
 package controller;
 
 import comp.CMPE343.Database.DatabaseConnector;
+import comp.CMPE343.UserInterface.Buyer.ProductPage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -52,13 +53,12 @@ public class LoginFormController {
 
             if(resultSet.next())
             {
-                Parent parent = FXMLLoader.load(this.getClass().getResource("../view/MainForm.fxml"));
-                Scene scene = new Scene(parent);
+                ProductPage productPage = new ProductPage();
+                Scene scene = productPage.scene;
 
                 Stage primarystage = (Stage) root.getScene().getWindow();
 
                 primarystage.setScene(scene);
-                primarystage.setTitle("Main Form");
                 primarystage.centerOnScreen();
             }
             else

@@ -2,8 +2,6 @@ package comp.CMPE343.UserInterface.Buyer;
 
 import comp.CMPE343.Database.DatabaseConnector;
 import comp.CMPE343.Logger;
-import javafx.geometry.HPos;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -11,60 +9,54 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class ProductPage {
+public class Cart {
 
 
     public Scene scene;
 
     private GridPane grid;
 
-    public String userName;
-    public String adress;
+    ProductPage parent;
 
-    public ArrayList<Product> sepet = new ArrayList<>();
+    public ArrayList<Product> sepet;
 
-    public ProductPage(){
+    public Cart(ArrayList<Product> sepet, ProductPage parent){
+        this.sepet = sepet;
+        this.parent = parent;
         grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
 //        grid.setPadding(new Insets(25,25,25,25));
         grid.setAlignment(Pos.CENTER);
 
-
-        ColumnConstraints UserData = new ColumnConstraints();
-        UserData.setHgrow(Priority.NEVER);
         ColumnConstraints Products = new ColumnConstraints();
         Products.setHgrow(Priority.ALWAYS);
         ColumnConstraints Sepet = new ColumnConstraints();
         Sepet.setHgrow(Priority.NEVER);
 
-        grid.getColumnConstraints().addAll(UserData, Products, Sepet);
+        grid.getColumnConstraints().addAll(Products, Sepet);
 
         // User Data
-        Button logOutButton = new Button("Log Out");
-        GridPane.setConstraints(logOutButton, 0, 0);
+        Button logOutButton = new Button("Back to Main Page");
+        GridPane.setConstraints(logOutButton, 2, 0);
 
 
         Button finishPurchaseButton = new Button("Finish Purchase");
-        GridPane.setConstraints(finishPurchaseButton, 0, 4);
+        GridPane.setConstraints(finishPurchaseButton, 2, 4);
 
         logOutButton.setOnAction(e ->{
-            System.exit(-1);
+            ((Stage) this.scene.getWindow()).setScene(parent.scene);
         });
 
         finishPurchaseButton.setOnAction(e ->{
-            Cart cart = new Cart(sepet,this);
-            ((Stage) this.scene.getWindow()).setScene(cart.scene);
+            DatabaseConnector.instance.sendRequest("INSERT INTO orders (address, customerName, orderItems, total, toBeDelivered) VALUES ('New Address', 'New Customer', 'New Item', 10.99, NOW());");
         });
 
         grid.getChildren().addAll(logOutButton, finishPurchaseButton);
@@ -75,33 +67,11 @@ public class ProductPage {
         grid.setConstraints(productsText, 1, 0);
         grid.getChildren().add(productsText);
 
-        UUID id = DatabaseConnector.instance.sendRequest("SELECT * FROM stock;");
-
-        ResultSet resultSet = null;
-        for (int i = 0; i < 20; i++) {
-            try {
-                resultSet = DatabaseConnector.instance.checkResult(id);
-                if(resultSet != null){
-                    break;
-                }
-                Thread.sleep(250);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
         try{
             int counter = 1;
-            while (resultSet.next()){
-                Product p = new Product(resultSet.getString("productName"), resultSet.getDouble("price"), resultSet.getDouble("markup"));
-                p.stock = resultSet.getDouble("stock");
-                String img = resultSet.getString("image");
-                if(!img.equals("default")){
-                    p.imageLoc = img;
-                }
-                p.id = resultSet.getInt("id");
+            for(Product p : sepet) {
                 ProductPane pane = new ProductPane(p, this);
-                GridPane.setConstraints(pane, 1, counter++);
+                GridPane.setConstraints(pane, 0, counter++);
                 grid.getChildren().add(pane);
             }
         }
@@ -109,12 +79,36 @@ public class ProductPage {
             e.printStackTrace();
         }
 
-        Label sepet = new Label("Your Cart");
-        grid.setConstraints(sepet, 2, 0);
-        grid.getChildren().add(sepet);
+
 
 
         scene = new Scene(grid, 900, 540);
+    }
+
+    public void changeAmount(Product product){
+        for (int i = 0; i < grid.getChildren().size(); i++) {
+            Node node = grid.getChildren().get(i);
+            if (node instanceof ProductPane && GridPane.getColumnIndex(node) == 0) {
+                ProductPane productPane = (ProductPane) node;
+                if (productPane.getProduct().productName.equals(product.productName)) {
+                    double oldPrice = productPane.getProduct().price;
+                    double oldStock = productPane.getProduct().stock;
+                    productPane.getProduct().price = product.price;
+                    productPane.getProduct().stock = product.stock;
+                    String newText = productPane.priceLabel.getText().replace(String.format("%.1f", oldStock), String.format("%.1f", productPane.getProduct().stock)).replace(String.format("%.1f", oldPrice), String.format("%.1f", productPane.getProduct().price));
+
+                    productPane.priceLabel.setText(newText);
+                    break;
+                }
+            }
+        }
+        for (int i = 0; i < sepet.size(); i++) {
+            if(sepet.get(i).productName.equals( product.productName)){
+                sepet.remove(i);
+                break;
+            }
+        }
+        sepet.add(product);
     }
 
     public void removeFromSepet(Product product){
@@ -182,7 +176,7 @@ public class ProductPage {
             }
         }
         if(foundInSepet == -1){
-            ProductPane pane = new ProductPane(product, this, true);
+            ProductPane pane = new ProductPane(product, this);
             GridPane.setConstraints(pane, 2, sepet.size() + 1);
             grid.getChildren().add(pane);
             sepet.add(product);

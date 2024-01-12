@@ -40,6 +40,10 @@ public class Product {
     public void setThreshold(double threshold) {
         this.stock = threshold;
     }
+
+    public Product(){
+
+    }
     public Product(Product copy){
         this.productName = copy.productName;
         this.price = copy.price;

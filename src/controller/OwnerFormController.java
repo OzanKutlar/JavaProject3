@@ -42,7 +42,7 @@ public class OwnerFormController {
             String Password =  txtPassword.getText();
 
             Connection connection = DatabaseConnector.instance.connection;
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from user where username =? and password = ?");
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from user where username =? and password = ? and privilege='admin'");
             preparedStatement.setString(1,Username);
             preparedStatement.setString(2,Password);
 
@@ -51,13 +51,12 @@ public class OwnerFormController {
 
             if(resultSet.next())
             {
-                Parent parent = FXMLLoader.load(this.getClass().getResource("../view/MainForm.fxml"));
+                Parent parent = FXMLLoader.load(this.getClass().getResource("../view/ownerform.fxml"));
                 Scene scene = new Scene(parent);
 
-                Stage primarystage = (Stage) root.getScene().getWindow();
+                Stage primarystage = (Stage) this.txtUserName.getScene().getWindow();
 
                 primarystage.setScene(scene);
-                primarystage.setTitle("Main Form");
                 primarystage.centerOnScreen();
             }
             else

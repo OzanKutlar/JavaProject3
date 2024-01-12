@@ -33,12 +33,12 @@ public class RegistationFormController  {
         lblpassword1.setVisible(false);
         lblpassword2.setVisible(false);
 
-        try {
-
-            AutoID();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+//        try {
+//
+////            AutoID();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
     }
 
 
@@ -120,17 +120,17 @@ public class RegistationFormController  {
                 Connection connection = DatabaseConnector.instance.connection;
 
 
-                String id = lblAutoID.getText();
+//                String id = lblAutoID.getText();
 
                 String name = txtfullName.getText();
-                String mail = txtmail.getText();
-                String address = txtaddress.getText();
 
+                // TODO: txtadress gives nullpointer exception
+                String address = txtaddress.getText();
                 String mobile = txtMobile.getText();
                 String cpass = txtConfirmPassword.getText();
 
-                PreparedStatement preparedStatement = connection.prepareStatement("insert into user(id,username,email,password)values(?,?,?,?) ");
-                preparedStatement.setString(1, id);
+                PreparedStatement preparedStatement = connection.prepareStatement("insert into user(address,username,email,password)values(?,?,?,?) ");
+                preparedStatement.setString(1, address);
                 preparedStatement.setString(2, name);
                 preparedStatement.setString(3, mobile);
                 preparedStatement.setString(4, cpass);

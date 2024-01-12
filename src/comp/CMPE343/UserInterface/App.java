@@ -42,7 +42,8 @@ public class App extends Application {
             }
         });
 
-        Scene testScene = new ProductPage().scene;
+//        Scene testScene = new ProductPage().scene;
+        Scene testScene = LoginFormController.getScene();
 
         // Sample code taken from teacher's presentation.
         primaryStage.setTitle("Group19 GreenGrocer"); // Set the stage title

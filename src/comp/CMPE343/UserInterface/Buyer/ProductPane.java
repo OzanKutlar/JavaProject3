@@ -29,6 +29,8 @@ public class ProductPane extends Region {
 
     ProductPage parent;
 
+    Cart parent2;
+
     boolean clickedBefore = false;
 
     public Product getProduct() {
@@ -79,6 +81,84 @@ public class ProductPane extends Region {
         this.setStyle("-fx-border-color: #ffffff; -fx-border-width: 3; -fx-border-radius: 1; -fx-background-color: #ffffff");
         this.getChildren().add(hbox);
         this.setOnMouseClicked(e -> removeFromSepet());
+    }
+
+    public ProductPane(Product product, Cart parent) {
+        this.product = product;
+        this.parent2 = parent;
+        ImageView imageView = new ImageView(String.valueOf(ProductPane.class.getResource(product.imageLoc)));
+        imageView.setFitWidth(50);
+        imageView.setFitHeight(50);
+
+        Label label1 = new Label(product.productName);
+        priceLabel = new Label(String.format("%.1f", product.price) + " TL\n" + String.format("%.1f", product.stock) + " kg");
+
+        HBox hbox = new HBox(imageView, label1, priceLabel);
+        hbox.setSpacing(40);
+        hbox.setPadding(new Insets(5, 5, 5, 5));
+
+        this.setStyle("-fx-border-color: #ffffff; -fx-border-width: 3; -fx-border-radius: 1; -fx-background-color: #ffffff");
+        this.getChildren().add(hbox);
+        this.setOnMouseClicked(e -> changeAmount());
+    }
+
+    private void changeAmount(){
+        Stage popUp = new Stage();
+        popUp.initModality(Modality.APPLICATION_MODAL);
+        popUp.initOwner(this.getParent().getScene().getWindow());
+
+        TextField textField = new TextField("0.0");
+        Slider slider = new Slider(0, Math.round(product.stock), 0);
+        slider.setMajorTickUnit(10);
+        slider.setMinorTickCount(5);
+        slider.setShowTickMarks(true);
+        slider.setShowTickLabels(true);
+        slider.setValue(product.stock);
+
+
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.isEmpty()) {
+                try{
+                    slider.setValue(Double.parseDouble(newValue));
+                }
+                catch(Exception e){
+                    Logger.debugLog("Product", "Unparseable");
+                }
+            }
+        });
+
+
+        slider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            textField.setText(String.format("%.1f", newValue.doubleValue()));
+        });
+
+        Button button = new Button("Lower the KG");
+        button.setOnAction(e -> {
+            // Add your confirmation logic here
+            Logger.log("Confirmed: %d", slider.getValue());
+            clickedBefore = true;
+            Product toSepet = new Product(product);
+            toSepet.stock = slider.getValue();
+            toSepet.price = slider.getValue() * (product.price/product.stock);
+            parent2.changeAmount(toSepet);
+            popUp.close();
+        });
+
+        Text text = new Text("Please select how much " + product.productName + " you want.");
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setAlignment(Pos.CENTER);
+        GridPane.setConstraints(text, 0, 0);
+        GridPane.setConstraints(slider, 0, 1);
+        GridPane.setConstraints(textField, 1, 0);
+        GridPane.setConstraints(button, 0, 2, 2, 1);
+
+        grid.getChildren().addAll(text, slider, textField, button);
+        Scene scene = new Scene(grid, 300, 200);
+        popUp.setScene(scene);
+
+        popUp.show();
     }
 
     private void removeFromSepet(){
