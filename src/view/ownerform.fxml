@@ -11,7 +11,6 @@
         <HBox spacing="10.0">
             <TextField fx:id="productNameTextField" promptText="Name" />
             <TextField fx:id="productPriceTextField" promptText="Price" />
-            <TextField fx:id="productThresholdTextField" promptText="Threshold" />
             <Button onAction="#addProduct" prefHeight="26.0" prefWidth="78.0" text="Add" />
             <Button onAction="#removeProduct" prefHeight="26.0" prefWidth="94.0" text="Remove" />
             <Button onAction="#updateProduct" prefHeight="26.0" prefWidth="99.0" text="Update" />

@@ -6,12 +6,12 @@ import comp.CMPE343.Main;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.sql.ResultSet;
@@ -91,6 +91,39 @@ public class Cart {
         });
 
         finishPurchaseButton.setOnAction(e ->{
+            Stage popUp = new Stage();
+            popUp.initModality(Modality.APPLICATION_MODAL);
+            popUp.initOwner(finishPurchaseButton.getParent().getScene().getWindow());
+            VBox vbox = new VBox(10);
+
+            Label welcomeText = new Label("Please choose a delivery Date!");
+            welcomeText.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-alignment: center;");
+
+            // Create a ToggleGroup for the radio buttons
+            ToggleGroup toggleGroup = new ToggleGroup();
+
+            // Create radio buttons
+            RadioButton option1 = new RadioButton("Today");
+            RadioButton option2 = new RadioButton("Tomorrow");
+            RadioButton option3 = new RadioButton("The Day After");
+
+            // Set the default selection to Option 1
+            option1.setSelected(true);
+
+            // Add radio buttons to the ToggleGroup
+            option1.setToggleGroup(toggleGroup);
+            option2.setToggleGroup(toggleGroup);
+            option3.setToggleGroup(toggleGroup);
+
+            // Create a "Press me" button
+            Button pressMeButton = new Button("Finish Purchase");
+            pressMeButton.setStyle("-fx-alignment: center; -fx-background-color: #3498db; -fx-font-size: 14px; -fx-font-weight: bold;");
+
+            vbox.getChildren().addAll(welcomeText ,option1, option2, option3, pressMeButton);
+            Scene scene = new Scene(vbox, 300, 200);
+            popUp.setScene(scene);
+            popUp.setTitle("Select a delivery!");
+            popUp.showAndWait();
 
             String itemStr = sepet.get(0).id + ":" + sepet.get(0).stock;;
             for (int i = 1; i < sepet.size(); i++) {
@@ -162,95 +195,6 @@ public class Cart {
             }
         }
         sepet.add(product);
-    }
-
-    public void removeFromSepet(Product product){
-        for (int i = 0; i < grid.getChildren().size(); i++) {
-            Node node = grid.getChildren().get(i);
-            if (node instanceof ProductPane && GridPane.getColumnIndex(node) == 1) {
-                ProductPane productPane = (ProductPane) node;
-                if (productPane.getProduct().productName.equals(product.productName)) {
-                    double oldStock = productPane.getProduct().stock;
-                    productPane.getProduct().stock += product.stock;
-                    String newText = productPane.priceLabel.getText().replace(String.format("%.1f", oldStock), String.format("%.1f", productPane.getProduct().stock));
-                    productPane.priceLabel.setText(newText);
-                    break;
-                }
-            }
-        }
-
-
-        for (int i = 0; i < grid.getChildren().size(); i++) {
-            Node node = grid.getChildren().get(i);
-            if (node instanceof ProductPane && GridPane.getColumnIndex(node) == 2) {
-                ProductPane productPane = (ProductPane) node;
-                Logger.log("Checking %d against %d", productPane.getProduct().price, product.price);
-                if (productPane.getProduct().productName.equals(product.productName) && productPane.getProduct().price == product.price) {
-                    grid.getChildren().remove(i);
-                    break;
-                }
-            }
-        }
-        for (int i = 0; i < sepet.size(); i++) {
-            if(sepet.get(i).productName.equals( product.productName)){
-                sepet.remove(i);
-                break;
-            }
-        }
-    }
-
-    public void addToSepet(Product product){
-        for (int i = 0; i < grid.getChildren().size(); i++) {
-            Node node = grid.getChildren().get(i);
-            if (node instanceof ProductPane && GridPane.getColumnIndex(node) == 1) {
-                ProductPane productPane = (ProductPane) node;
-                if (productPane.getProduct().productName.equals(product.productName)) {
-                    double oldStock = productPane.getProduct().stock;
-                    productPane.getProduct().stock -= product.stock;
-                    String newText = productPane.priceLabel.getText().replace(String.format("%.1f", oldStock), String.format("%.1f", productPane.getProduct().stock));
-
-                    productPane.priceLabel.setText(newText);
-                    break;
-                }
-            }
-        }
-
-
-
-        int foundInSepet = -1;
-        for (int i = 0; i < grid.getChildren().size(); i++) {
-            Node node = grid.getChildren().get(i);
-            if (node instanceof ProductPane && GridPane.getColumnIndex(node) == 2) {
-                ProductPane productPane = (ProductPane) node;
-                if (productPane.getProduct().productName.equals(product.productName)) {
-                    foundInSepet = i;
-                    break;
-                }
-            }
-        }
-        if(foundInSepet == -1){
-            ProductPane pane = new ProductPane(product, this);
-            GridPane.setConstraints(pane, 2, sepet.size() + 1);
-            grid.getChildren().add(pane);
-            sepet.add(product);
-        }
-        else{
-            ProductPane oldPane = (ProductPane) grid.getChildren().get(foundInSepet);
-            double oldPrice = oldPane.getProduct().price;
-            double oldStock = oldPane.getProduct().stock;
-            oldPane.getProduct().price += product.price;
-            oldPane.getProduct().stock += product.stock;
-            String newText = oldPane.priceLabel.getText().replace(String.format("%.1f", oldStock), String.format("%.1f", oldPane.getProduct().stock)).replace(String.format("%.1f", oldPrice), String.format("%.1f", oldPane.getProduct().price));
-
-            oldPane.priceLabel.setText(newText);
-            for (int i = 0; i < sepet.size(); i++) {
-                if(sepet.get(i).productName.equals( product.productName)){
-                    sepet.remove(i);
-                    break;
-                }
-            }
-            sepet.add(product);
-        }
     }
 
 }

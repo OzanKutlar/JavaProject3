@@ -116,7 +116,7 @@ public class OrdersPage {
 
 
         // Products Columnu
-        Label productsText = new Label("Select a product!");
+        Label productsText = new Label("Confirm your products!");
         productsText.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-alignment: center;");
         grid.setConstraints(productsText, 0, 0);
         grid.getChildren().add(productsText);

@@ -58,4 +58,9 @@ public class Product {
         this.price = price;
         this.markupNumber = markup;
     }
+
+    @Override
+    public String toString() {
+        return "Product " + id + " : " + productName + ", " + String.format("%.1f", price) + " TL/kg, Currently have " + String.format("%.1f", stock) + " kgs in stock. Markup at " + String.format("%.1f", markupNumber) + " kgs left";
+    }
 }

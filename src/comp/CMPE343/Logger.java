@@ -11,7 +11,7 @@ public class Logger {
 
     private static void logPrefixed(String prefix, String s, Object... objects){
         for (Object object : objects) {
-            s = s.replace("%d", object.toString());
+            s = s.replaceFirst("%d", object.toString());
         }
         System.out.println(prefix + s);
     }
