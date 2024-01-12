@@ -1,6 +1,7 @@
 package controller;
 
 import comp.CMPE343.Database.DatabaseConnector;
+import comp.CMPE343.Main;
 import comp.CMPE343.UserInterface.Buyer.ProductPage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -53,6 +54,7 @@ public class LoginFormController {
 
             if(resultSet.next())
             {
+                Main.userID = resultSet.getInt("id");
                 ProductPage productPage = new ProductPage();
                 Scene scene = productPage.scene;
 

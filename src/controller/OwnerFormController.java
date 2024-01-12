@@ -1,6 +1,7 @@
 package controller;
 
 import comp.CMPE343.Database.DatabaseConnector;
+import comp.CMPE343.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -50,6 +51,7 @@ public class OwnerFormController {
 
             if(resultSet.next())
             {
+                Main.userID = resultSet.getInt("id");
                 Parent parent = FXMLLoader.load(this.getClass().getResource("../view/ownerform.fxml"));
                 Scene scene = new Scene(parent);
 

@@ -1,6 +1,7 @@
 package controller;
 
 import comp.CMPE343.Database.DatabaseConnector;
+import comp.CMPE343.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -42,6 +43,7 @@ public class CarrierFormController {
             String Username =  txtUserName.getText();
             String Password =  txtPassword.getText();
 
+
             Connection connection = DatabaseConnector.instance.connection;
             PreparedStatement preparedStatement = connection.prepareStatement("select * from user where username =? and password = ? and privilege='driver'");
             preparedStatement.setString(1,Username);
@@ -52,6 +54,7 @@ public class CarrierFormController {
 
             if(resultSet.next())
             {
+                Main.userID = resultSet.getInt("id");
                 Parent parent = FXMLLoader.load(this.getClass().getResource("../view/carrierform.fxml"));
                 Scene scene = new Scene(parent);
 

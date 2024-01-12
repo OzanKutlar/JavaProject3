@@ -2,9 +2,11 @@ package comp.CMPE343.UserInterface.Buyer;
 
 import comp.CMPE343.Database.DatabaseConnector;
 import comp.CMPE343.Logger;
+import comp.CMPE343.Main;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
@@ -27,6 +29,10 @@ public class Cart {
 
     public ArrayList<Product> sepet;
 
+    String adress;
+    String Username;
+
+
     public Cart(ArrayList<Product> sepet, ProductPage parent){
         this.sepet = sepet;
         this.parent = parent;
@@ -35,6 +41,29 @@ public class Cart {
         grid.setVgap(10);
 //        grid.setPadding(new Insets(25,25,25,25));
         grid.setAlignment(Pos.CENTER);
+
+        UUID id = DatabaseConnector.instance.sendRequest("SELECT * FROM users where id="+ Main.userID + ";");
+
+        ResultSet resultSet = null;
+        for (int i = 0; i < 20; i++) {
+            try {
+                resultSet = DatabaseConnector.instance.checkResult(id);
+                if(resultSet != null){
+                    break;
+                }
+                Thread.sleep(250);
+            } catch (InterruptedException e) {
+                Logger.log("Interrupted in Cart");
+            }
+        }
+
+        try{
+
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+
 
         ColumnConstraints Products = new ColumnConstraints();
         Products.setHgrow(Priority.ALWAYS);
@@ -56,7 +85,18 @@ public class Cart {
         });
 
         finishPurchaseButton.setOnAction(e ->{
+
             DatabaseConnector.instance.sendRequest("INSERT INTO orders (address, customerName, orderItems, total, toBeDelivered) VALUES ('New Address', 'New Customer', 'New Item', 10.99, NOW());");
+
+            for (Product p : sepet){
+                DatabaseConnector.instance.sendRequest("UPDATE stock SET stock = stock - " + p.stock + " WHERE id = " + p.id + ";");
+            }
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Order Successful");
+            alert.showAndWait();
+
+            ProductPage productPage = new ProductPage();
+
+            ((Stage) this.scene.getWindow()).setScene(productPage.scene);
         });
 
         grid.getChildren().addAll(logOutButton, finishPurchaseButton);

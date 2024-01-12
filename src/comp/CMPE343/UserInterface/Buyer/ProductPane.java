@@ -53,7 +53,7 @@ public class ProductPane extends Region {
         imageView.setFitHeight(50);
 
         Label label1 = new Label(product.productName);
-        priceLabel = new Label(String.format("%.1f", product.price) + " TL/kg\n" + String.format("%.1f", product.stock) + " kg kaldı!");
+        priceLabel = new Label(String.format("%.1f", product.price) + " TL/kg\nOnly " + String.format("%.1f", product.stock) + " kg left!");
 
         HBox hbox = new HBox(imageView, label1, priceLabel);
         hbox.setSpacing(40);

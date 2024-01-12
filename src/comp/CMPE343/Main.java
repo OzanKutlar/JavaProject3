@@ -10,6 +10,7 @@ import static comp.CMPE343.Logger.*;
 
 public class Main {
 
+    public static int userID = -1;
 
     public static void main(String[] args){
         log("Thread Started.");
