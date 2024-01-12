@@ -230,6 +230,7 @@ public class OwnerController {
                     String imageLoc = imageTextField.getText();
                     double stock = Double.parseDouble(stockCountField.getText());
                     double thresholdField = Double.parseDouble(doublePriceField.getText());
+                    if(thresholdField <= 0 || stock <= 0 || price <= 0) throw new NumberFormatException();
 
                     Product product = new Product();
                     product.id = selectedProduct.id;

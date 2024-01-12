@@ -6,9 +6,9 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -212,6 +212,7 @@ public class ProductPane extends Region {
                     slider.setValue(Double.parseDouble(newValue));
                 }
                 catch(Exception e){
+                    slider.setValue(0);
                     Logger.debugLog("Product", "Unparseable");
                 }
             }
@@ -227,6 +228,12 @@ public class ProductPane extends Region {
         button.setOnAction(e -> {
             // Add your confirmation logic here
             Logger.log("Confirmed: %d", slider.getValue());
+            if(slider.getValue() == 0){
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Invalid input. Please enter valid numbers.", ButtonType.OK);
+                alert.showAndWait();
+                popUp.close();
+                return;
+            }
             clickedBefore = true;
             Product toSepet = new Product(product);
             toSepet.stock = slider.getValue();
