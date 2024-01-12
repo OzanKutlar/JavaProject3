@@ -84,69 +84,77 @@ public class OwnerController {
         query = query.replaceFirst("%r", String.valueOf(product.markupNumber));
         query = query.replaceFirst("%r", product.productName);
         DatabaseConnector.instance.sendRequest(query);
+        productsListView.getItems().add(product);
     }
 
     @FXML
     private void addProduct() {
         // Add a new product to the database
-        String name = productNameTextField.getText();
-        double price = Double.parseDouble(productPriceTextField.getText());
-        Stage popUp = new Stage();
-        popUp.initModality(Modality.APPLICATION_MODAL);
-        popUp.initOwner(productNameTextField.getScene().getWindow());
+        try{
+            String name = productNameTextField.getText();
+            double price = Double.parseDouble(productPriceTextField.getText());
+            Stage popUp = new Stage();
+            popUp.initModality(Modality.APPLICATION_MODAL);
+            popUp.initOwner(productNameTextField.getScene().getWindow());
 
-        // Create a GridPane for the layout
-        GridPane gridPane = new GridPane();
-        gridPane.setPadding(new Insets(10));
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
-
-
-        Label imageLabel = new Label("Image Location:");
-        TextField imageTextField = new TextField();
-        imageTextField.setText("default");
-        Label countLabel = new Label("Stock Amount:");
-        TextField stockCountField = new TextField();
-        Label doublePriceLabel = new Label("Threshold:");
-        TextField doublePriceField = new TextField();
-        gridPane.add(imageLabel, 0, 0);
-        gridPane.add(imageTextField, 1, 0);
-
-        gridPane.add(countLabel, 0, 1);
-        gridPane.add(stockCountField, 1, 1);
-
-        gridPane.add(doublePriceLabel, 0, 2);
-        gridPane.add(doublePriceField, 1, 2);
+            // Create a GridPane for the layout
+            GridPane gridPane = new GridPane();
+            gridPane.setPadding(new Insets(10));
+            gridPane.setHgap(10);
+            gridPane.setVgap(10);
 
 
-        Button confirmButton = new Button("Add Product");
-        confirmButton.setOnAction(event -> {
-            try {
-                String imageLoc = imageTextField.getText();
-                double stock = Double.parseDouble(stockCountField.getText());
-                double thresholdField = Double.parseDouble(doublePriceField.getText());
+            Label imageLabel = new Label("Image Location:");
+            TextField imageTextField = new TextField();
+            imageTextField.setText("default");
+            Label countLabel = new Label("Stock Amount:");
+            TextField stockCountField = new TextField();
+            Label doublePriceLabel = new Label("Threshold:");
+            TextField doublePriceField = new TextField();
+            gridPane.add(imageLabel, 0, 0);
+            gridPane.add(imageTextField, 1, 0);
 
-                Product product = new Product();
-                product.imageLoc = imageLoc;
-                product.productName = name;
-                product.stock = stock;
-                product.price = price;
-                product.markupNumber = thresholdField;
+            gridPane.add(countLabel, 0, 1);
+            gridPane.add(stockCountField, 1, 1);
 
-                addProduct(product);
-                popUp.close();
-            } catch (NumberFormatException e) {
-                // Handle invalid input
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Invalid input. Please enter valid numbers.", ButtonType.OK);
-                alert.showAndWait();
-            }
-        });
+            gridPane.add(doublePriceLabel, 0, 2);
+            gridPane.add(doublePriceField, 1, 2);
 
 
-        gridPane.add(confirmButton, 0, 3, 2, 1);
-        Scene scene = new Scene(gridPane);
-        popUp.setScene(scene);
-        popUp.showAndWait();
+            Button confirmButton = new Button("Add Product");
+            confirmButton.setOnAction(event -> {
+                try {
+                    String imageLoc = imageTextField.getText();
+                    double stock = Double.parseDouble(stockCountField.getText());
+                    double thresholdField = Double.parseDouble(doublePriceField.getText());
+
+                    Product product = new Product();
+                    product.imageLoc = imageLoc;
+                    product.productName = name;
+                    product.stock = stock;
+                    product.price = price;
+                    product.markupNumber = thresholdField;
+
+                    addProduct(product);
+                    popUp.close();
+                } catch (NumberFormatException e) {
+                    // Handle invalid input
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Invalid input. Please enter valid inputs.", ButtonType.OK);
+                    alert.showAndWait();
+                }
+            });
+
+
+            gridPane.add(confirmButton, 0, 3, 2, 1);
+            Scene scene = new Scene(gridPane);
+            popUp.setScene(scene);
+            popUp.showAndWait();
+        }
+        catch(Exception e){
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Invalid input. Please enter valid inputs.", ButtonType.OK);
+            alert.showAndWait();
+            return;
+        }
     }
 
     private void removeProduct(Product product){

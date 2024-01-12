@@ -230,7 +230,23 @@ public class ProductPane extends Region {
             clickedBefore = true;
             Product toSepet = new Product(product);
             toSepet.stock = slider.getValue();
-            toSepet.price = slider.getValue() * product.price;
+            toSepet.price = 0;
+            if(product.stock - toSepet.stock <= product.markupNumber){
+                double diff;
+                if(product.stock > product.markupNumber){
+                    diff = product.markupNumber - (product.stock - toSepet.stock);
+                }else{
+                    diff = toSepet.stock;
+                }
+
+                Logger.log("Over Markup value, charging double for %d amount", diff);
+                double diff2 = toSepet.stock - diff;
+                toSepet.price += diff * product.price * 2;
+                toSepet.price += diff2 * product.price;
+            }
+            else{
+                toSepet.price = slider.getValue() * product.price;
+            }
             parent.addToSepet(toSepet);
             popUp.close();
         });

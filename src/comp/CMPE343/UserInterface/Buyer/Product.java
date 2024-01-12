@@ -2,7 +2,7 @@ package comp.CMPE343.UserInterface.Buyer;
 
 public class Product {
 
-    public int id;
+    public int id = -1;
 
     public String productName;
     public double stock;
@@ -61,6 +61,9 @@ public class Product {
 
     @Override
     public String toString() {
+        if(id == -1){
+            return "New Product : " + productName + ", " + String.format("%.1f", price) + " TL/kg, Currently have " + String.format("%.1f", stock) + " kgs in stock. Markup at " + String.format("%.1f", markupNumber) + " kgs left";
+        }
         return "Product " + id + " : " + productName + ", " + String.format("%.1f", price) + " TL/kg, Currently have " + String.format("%.1f", stock) + " kgs in stock. Markup at " + String.format("%.1f", markupNumber) + " kgs left";
     }
 }
