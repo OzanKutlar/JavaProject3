@@ -27,6 +27,7 @@ public class RegistationFormController  {
     public Label lblAutoID;
     public TextField txtmail;
     public TextField txtaddress;
+    public AnchorPane root;
 
 
     public void initialize() {
@@ -179,6 +180,17 @@ public class RegistationFormController  {
         txtConfirmPassword.setStyle(" -fx-border-color: " + color);
     }
 
+    public void btnloginform(ActionEvent actionEvent) throws IOException {
 
+        Parent parent = FXMLLoader.load(this.getClass().getResource("../view/loginform.fxml"));
+        Scene scene = new Scene(parent);
+
+        Stage primaryStage = (Stage) root.getScene().getWindow();
+
+        primaryStage.setScene(scene);
+
+        primaryStage.centerOnScreen();
+
+    }
 
 }
