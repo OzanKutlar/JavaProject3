@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="299.0" prefWidth="359.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CarrierFormController">
+                <children>
+                    <TextField fx:id="txtUserName" layoutX="45.0" layoutY="89.0" prefHeight="38.0" prefWidth="292.0" promptText="UserName" style="-fx-background-color: white;">
+                        <font>
+                            <Font size="16.0" />
+                        </font>
+                    </TextField>
+                    <PasswordField fx:id="txtPassword" layoutX="45.0" layoutY="143.0" prefHeight="38.0" prefWidth="292.0" promptText="Password" style="-fx-background-color: white;">
+                        <font>
+                            <Font size="16.0" />
+                        </font>
+                    </PasswordField>
+                    <Label layoutX="45.0" layoutY="47.0" text="Carrier Login" textFill="#10aed3">
+                        <font>
+                            <Font name="System Bold" size="23.0" />
+                        </font>
+                    </Label>
+                    <Separator layoutX="45.0" layoutY="73.0" prefHeight="7.0" prefWidth="301.0" />
+                    <Button layoutX="45.0" layoutY="217.0" mnemonicParsing="false" onAction="#btnCarrierLogin" prefHeight="40.0" prefWidth="131.0" style="-fx-background-color: yellow;" text="Sign In" textFill="WHITE">
+                        <font>
+                            <Font name="System Bold" size="18.0" />
+                        </font>
+                    </Button>
+                    <Separator layoutX="45.0" layoutY="195.0" prefHeight="7.0" prefWidth="301.0" />
+                    <Button layoutX="19.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnloginform" text="Back" />
+                </children>
+</AnchorPane>

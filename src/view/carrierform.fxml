@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="comp.CMPE343.UserInterface.Driver.CarrierController"
+            prefHeight="400.0" prefWidth="600.0">
+    <children>
+        <VBox layoutX="14.0" layoutY="14.0" prefHeight="372.0" prefWidth="572.0" spacing="10.0">
+            <Label text="Available Orders" />
+            <ListView fx:id="availableOrdersListView" prefHeight="200.0" prefWidth="200.0" />
+            <Button text="Select Order" onAction="#selectOrder" />
+            <Label text="Selected Orders" />
+            <ListView fx:id="selectedOrdersListView" prefHeight="100.0" prefWidth="200.0" />
+            <Button text="Deliver Order" onAction="#deliverOrder" />
+            <Label text="Completed Orders" />
+            <ListView fx:id="completedOrdersListView" prefHeight="100.0" prefWidth="200.0" />
+        </VBox>
+    </children>
+</AnchorPane>

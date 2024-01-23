@@ -1,0 +1,228 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 6,
+    "backwardDepth": 6,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "comp.CMPE343.Main",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_1613637043 { 
+   	label=CMPE343
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   Logger1958110676[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Logger</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ debugLog(debugType: String, s: String, objects: Object...)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ log(s: String, objects: Object...)</TD></TR>
+<TR><TD ALIGN="LEFT" >- logPrefixed(prefix: String, s: String, objects: Object...)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Main1958110676[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Main</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ main(args: String[])</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+subgraph cluster_1525928083 { 
+   	label=UserInterface
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   App1364509428[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)App</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ start(primaryStage: Stage)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+LoginScene1364509428[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)LoginScene</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+   callBackData: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   loadingText: Label [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   loginButton: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   password: PasswordField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   registrationButton: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   scene: Scene [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   username: TextField [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ checkDatabase(): int</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+SceneManager1364509428[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)SceneManager</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+   app: App [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ startUI(args: String...)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ stopUI()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+subgraph cluster_1930754934 { 
+   	label=Database
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   DatabaseConnector783527819[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)DatabaseConnector</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+   connection: Connection [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   requests: ArrayList&lt;DatabaseRequest&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   results: ArrayList&lt;DatabaseRequest&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ checkDatabaseExists(): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ checkResult(id: UUID): ResultSet</TD></TR>
+<TR><TD ALIGN="LEFT" >+ employCarrier(carrier: Carrier)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ fireCarrier(carrier: Carrier)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ sendRequest(requestString: String): UUID</TD></TR>
+<TR><TD ALIGN="LEFT" >+ startDatabaseConnector()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ startQueue()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateProduct(selectedProduct: Product, updatedProduct: Product)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+DatabaseRequest783527819[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)DatabaseRequest</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   request: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   requestID: UUID [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   resultSet: CachedRowSet [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+} 
+
+'edges    
+App1364509428 -> LoginScene1364509428[label="start() -> checkDatabase()"];
+DatabaseConnector783527819 -> DatabaseRequest783527819[label="requests
+[0..*]"];
+DatabaseConnector783527819 -> DatabaseRequest783527819[label="results
+[0..*]"];
+Main1958110676 -> SceneManager1364509428[label="main() -> startUI()"];
+SceneManager1364509428 -> App1364509428[label="app
+[0..1]"];
+    
+}
+@enduml

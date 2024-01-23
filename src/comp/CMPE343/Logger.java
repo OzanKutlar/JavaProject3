@@ -2,7 +2,7 @@ package comp.CMPE343;
 
 public class Logger {
 
-    public static String DEBUG = "Scene";
+    public static String DEBUG = "Scene,Database";
 
 
     public static void log(String s, Object... objects){
@@ -11,7 +11,7 @@ public class Logger {
 
     private static void logPrefixed(String prefix, String s, Object... objects){
         for (Object object : objects) {
-            s = s.replace("%d", object.toString());
+            s = s.replaceFirst("%d", object.toString());
         }
         System.out.println(prefix + s);
     }
